@@ -1,0 +1,255 @@
+import os
+import sys
+from colorama import init, Fore
+
+init(autoreset=True)
+
+estoque = []
+valores = []
+cliente_cad = []
+
+print("                                      ")
+print(f"{Fore.YELLOW}--- Bem=Vindo(a) a Services Store! ---")
+usuario = input("Digite seu nome para uma melhor experiência: ")
+print(f"Olá, {usuario.title()}")
+print("                                      ")
+cliente_cad.append(usuario.title())
+
+def limpar_tela():
+    os.system("cls" if os.name == "nt" else "clear") # Escrever só se for cls, se não for, usara clear
+
+def pausar():
+    input(f"{Fore.BLUE}Digite ENTER para continuar...")
+
+def sair_do_programa():
+    sys.exit()
+
+def processar_opcao(opcao):
+        if opcao == "1":
+            informações_cliente()
+        elif opcao == "2":
+            adicionar_produto()
+        elif opcao == "3":
+            adicionar_valor()
+        elif opcao == "4":
+            visualizar_estoque(estoque, valores)
+        elif opcao == "5":
+            deletar_carrinho(estoque, item=True)
+        elif opcao == "6":
+            deletar_valor(valores, preco=True)
+        elif opcao == "7":
+            informação_criador()
+        elif opcao == "8":
+            funcionalidades_extras()
+        elif opcao == "0":
+            print(f"{Fore.LIGHTMAGENTA_EX}Obrigado por usar! Saindo... ")
+            sair_do_programa()
+        else:
+            print("Digite algo válido")
+
+def informações_cliente():
+    print("--- Info. sobre o cliente ---")
+    print("Se seu nome aparecer abaixo, você está cadastrado...")
+    print(cliente_cad)
+    while True:
+        nome = input("Digite um nome se deseja cadastrar mais (ou 'sair' para terminar): ")
+        if nome == "sair":
+            break
+        cliente_cad.append(nome)
+
+    for nome in cliente_cad:
+        print(f"Nomes cadastrados: {cliente_cad}")
+        processar_opcao(opcao=True)
+        pausar()
+        limpar_tela()
+        executar_sistema()
+
+def adicionar_produto():
+    print(f"{Fore.YELLOW}-- ADICIONANDO e ATUALIZANDO PRODUTO --")
+    item = input("Digite o nome do item: ")
+    estoque.append(item)
+    print(f"{item} adicionado ao estoque!")
+    pausar()
+    limpar_tela()
+    executar_sistema()
+
+def adicionar_valor():
+    print(f"{Fore.YELLOW}-- ADICIONANDO e ATUALIZANDO PRODUTO --")
+    preco = input("Digite o valor do item: ")
+    valores.append(preco)
+    print(f"Valor de {preco} adicionado ao item")
+    pausar()
+    limpar_tela()
+    executar_sistema()
+
+def visualizar_estoque(estoque, valor):
+    print(f"{Fore.BLUE}--- Visualizando Estoque ---")
+    if len(estoque) == 0:
+        print("O estoque está vazio!")
+    else:
+        print("Valores e itens do estoque:")
+        for item in estoque:
+            print(item)
+        for preco in valor:
+            print(preco)
+    pausar()
+    limpar_tela()
+    executar_sistema()
+
+def deletar_carrinho(estoque, item):
+    print(f"{Fore.YELLOW}-- Deletando do Estoque --")
+    print(estoque)
+    deseja_remover = input("Qual item deseja remover do estoque?: ")
+    estoque.remove(deseja_remover)
+    print(f"{Fore.RED}Atualizado: {estoque}")
+
+    pausar()
+    limpar_tela()
+    executar_sistema()
+
+def deletar_valor(valores, preco):
+    print(f"{Fore.YELLOW}-- Deletando do Valor --")
+    print(valores)
+    deseja_remover = input("Qual valor deseja remover do estoque?: ")
+    valores.remove(deseja_remover)
+    print(f"{Fore.RED}Atualizado: {valores}")
+    pausar()
+    limpar_tela()
+    executar_sistema()
+    
+
+def informação_criador():
+    print(f"{Fore.RED}--- Sobre o Criador ---")
+    print("                                      ")
+    print(f"{Fore.RED}Desenvolvido pelo aluno Kayque Silva Della Capa")
+    print(f"{Fore.RED}Feito para fins educacionais")
+    print("                                      ")
+    print(f"{Fore.RED}--- versão 2.0 ---")
+    
+    pausar()
+    limpar_tela()
+    executar_sistema()
+
+def funcionalidades_extras():
+    print(f"{Fore.LIGHTYELLOW_EX}--- Funcionalidades Extras ---")
+    print(f"{Fore.LIGHTBLUE_EX}Se quiser acessar a calculadora, digite '1'")
+    print(f"{Fore.LIGHTRED_EX}Se quiser jogar um jogo de palavras '2'")
+    escolha_funcionalidades = str(input("Digite a opção desejada: "))
+    if escolha_funcionalidades == "1":
+        print(f"{Fore.LIGHTCYAN_EX}---  Calculadora ---")
+        while True:
+            numero1 = input("Digite um número: ")
+            numero2 = input("Digite outro número: ")
+            operador = input("Digite o operador (+ - / *): ")
+
+            numeros_validos = None # Flag atrelada a variavel
+            num1_float: 0
+            num2_float: 0
+
+            try:
+                num1_float = float(numero1)
+                num2_float = float(numero2)
+                numeros_validos = True
+
+            except:
+                numeros_validos = None
+
+                if numeros_validos is None:
+                    print("Um dos números ou ambos são invalidos")
+                    continue
+
+            operadores_permitidos = "+-/*"
+
+            if operador not in operadores_permitidos:
+                print("Operador inválido")
+                continue
+
+            if len(operador) > 1:
+                print("Digite apenas um operador")
+                continue
+
+            print("Confira o resultado da sua conta: ")
+            if operador == "+":
+                print(num1_float + num2_float)
+            
+            if operador == "-":
+                print(num1_float - num2_float)
+            
+            if operador == "*":
+                print(num1_float * num2_float)
+            
+            if operador == "/":
+                print(num1_float / num2_float)
+            else:
+                print("")
+
+            sair = input("Quer sair? [s]: ").lower().startswith("s") # poderia montar direto, assim
+            print(sair)
+
+            if sair is True:
+                break
+        limpar_tela()
+        processar_opcao(opcao=True)
+        pausar()
+        executar_sistema()
+
+    elif escolha_funcionalidades == "2":
+        print(f"{Fore.LIGHTCYAN_EX}---  Jogo de Palavras ---")
+        palavra_secreta = 'perfume'
+        letras_acertadas = ''
+        numero_tentativas = 0
+
+        while True:
+            letra_digitada = input('Digite uma letra: ')
+            numero_tentativas += 1
+
+            if len(letra_digitada) > 1: # Aqui reduz as letras lidas para um, ou seja, não pode digitar toda a palavra
+                print('Digite apenas uma letra.')
+                continue
+
+            if letra_digitada in palavra_secreta:
+                letras_acertadas += letra_digitada
+
+            palavra_formada = ""
+            for letra_secreta in palavra_secreta:
+                if letra_secreta in letras_acertadas:
+                    palavra_formada += letra_secreta
+                else:
+                    palavra_formada += '*'
+
+            print("Palavra formada ", palavra_formada)
+
+            if palavra_formada == palavra_secreta:
+                os.system("cls")
+                print('VOCÊ GANHOU!! PARABÉNS!')
+                print('A palavra era', palavra_secreta)
+                print('Tentativas:', numero_tentativas)
+                letras_acertadas = ''
+                numero_tentativas = 0
+                pausar()
+                limpar_tela()
+                executar_sistema()
+    else:
+        print("Digite algo válido")
+
+def exibir_menu():
+    print(F"{Fore.GREEN}-----MENU-----")
+    print(f"{Fore.GREEN}1. Informações sobre o cliente")
+    print(f"{Fore.GREEN}2. Adicionar ou Atualizar o Estoque")
+    print(f"{Fore.GREEN}3. Adicionar ou Atualizar o Valor")
+    print(f"{Fore.GREEN}4. Visualizar Estoque")
+    print(f"{Fore.GREEN}5. Excluir do Estoque")
+    print(f"{Fore.GREEN}6. Excluir do Valor")
+    print(f"{Fore.GREEN}7. Informações sobre o criador")
+    print(f"{Fore.GREEN}8. Funcionalidades Extras")
+    print(f"{Fore.GREEN}0. Sair")
+
+def executar_sistema():
+    exibir_menu()
+    opcao = input("Digite a opção desejada: ")
+    limpar_tela()
+    processar_opcao(opcao)
+    pausar()
+    executar_sistema()
+
+executar_sistema()
