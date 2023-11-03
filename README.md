@@ -1,4 +1,3 @@
-# projetos_faculdade
 Visão geral:
 Você foi contratado como desenvolvedor(a) para criar um sistema de controle de
 estoque para uma loja de eletrônicos. O sistema deve ser capaz de adicionar novos
